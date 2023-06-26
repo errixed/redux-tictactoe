@@ -1,11 +1,11 @@
 import React from 'react';
 import './App.css';
-import TodoList from './components/todoList';
+import TicTacToe from './components/ticTacToe';
 
 function App() {
   return (
     <div className="App">
-      <TodoList />
+      <TicTacToe />
     </div>
   );
 }

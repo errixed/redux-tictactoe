@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { State, Turn, turn, turnSelector } from "./todoSlice";
+import { State, Turn, turn, turnSelector } from "./ticTacToeSlice";
 
-function TodoList() {
+function TicTacToe() {
   const [states, setStates] = useState<State>();
   // const [newTable, setNewTable] = useState<Array<Array<Cell>>>([
   //   ['-']
@@ -59,4 +59,4 @@ function TodoList() {
     </div>
   );
 }
-export default TodoList;
+export default TicTacToe;

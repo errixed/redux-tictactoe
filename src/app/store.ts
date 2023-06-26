@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import tactactoeReducer from '../components/todoSlice';
+import tactactoeReducer from '../components/ticTacToeSlice';
 
 export const store = configureStore({
   reducer: {
