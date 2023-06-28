@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { State, Turn, turn, turnSelector } from "./ticTacToeSlice";
+import { State, selectWinner, turn, turnSelector } from "./ticTacToeSlice";
 
 function TicTacToe() {
   const [states, setStates] = useState<State>();
@@ -22,9 +22,13 @@ function TicTacToe() {
     };
     dispatch(turn(constTurn));
   }
+
+  const winner = useAppSelector(selectWinner);
+
   return (
     <div className="container">
       <h3>current turn: {states?.turn}</h3>
+      <h3>{winner}</h3>
       <table>
         {
           states?.table.map((row, index) => {

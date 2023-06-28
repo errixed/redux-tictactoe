@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../app/store";
 
 // export interface Todo {
@@ -7,7 +7,7 @@ import { RootState } from "../app/store";
 //   description: string;
 // }
 
-export type Cell = 'X' | 'O' | '-'
+type Cell = 'X' | 'O' | '-'
 export type Table = Array<Array<Cell>>
 export type Turn = Exclude<Cell, '-'>
 
@@ -25,7 +25,7 @@ const initialState: State = {
   turn: "X"
 }
 
-interface TurnAction {
+export interface TurnAction {
   i: number,
   j: number,
 }
@@ -40,6 +40,38 @@ export const tactactoeSlice = createSlice({
     }
   },
 });
+
+function calculateWinner(squares: string[]) {
+  const lines = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6]
+  ];
+  for (let i = 0; i < lines.length; i++) {
+    const [a, b, c] = lines[i];
+    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+      return squares[a];
+    }
+  }
+  return null;
+}
+
+export const selectSquares = (state: RootState) => state.tactactoeReducer.table
+
+export const selectWinner = createSelector(
+  // First we select the raw data that we need from Redux.
+  selectSquares,
+  // Then we convert it to the output that we want.
+  (squares) => {
+    const squaresArray = squares.flat();
+    return calculateWinner(squaresArray);
+  }
+);
 
 export const { turn } = tactactoeSlice.actions;
 export const turnSelector = (state: RootState) => state.tactactoeReducer;
