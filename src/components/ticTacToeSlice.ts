@@ -1,12 +1,6 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../app/store";
 
-// export interface Todo {
-//   id: string;
-//   title: string;
-//   description: string;
-// }
-
 type Cell = 'X' | 'O' | '-'
 export type Table = Array<Array<Cell>>
 export type Turn = Exclude<Cell, '-'>
@@ -41,7 +35,7 @@ export const tactactoeSlice = createSlice({
   },
 });
 
-function calculateWinner(squares: string[]) {
+function calculateWinner(squares: any) {
   const lines = [
     [0, 1, 2],
     [3, 4, 5],
@@ -64,9 +58,7 @@ function calculateWinner(squares: string[]) {
 export const selectSquares = (state: RootState) => state.tactactoeReducer.table
 
 export const selectWinner = createSelector(
-  // First we select the raw data that we need from Redux.
   selectSquares,
-  // Then we convert it to the output that we want.
   (squares) => {
     const squaresArray = squares.flat();
     return calculateWinner(squaresArray);
