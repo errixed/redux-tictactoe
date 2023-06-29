@@ -14,29 +14,24 @@ function TicTacToe() {
   }, [selectedTurn]);
 
   function handleTurn(i: number, j: number) {
-    const constTurn = {
+    const newTurn = {
       i: i,
       j: j
     };
-    const constGameStatus = {
+    const newGameStatus = {
       message: status
     }
 
     if (winner === null) {
-      dispatch(turn(constTurn));
-      dispatch(setGameStatus(constGameStatus))
+      dispatch(turn(newTurn));
+      dispatch(setGameStatus(newGameStatus))
     }
   }
 
   const winner = useAppSelector(selectWinner);
 
-  const resetGame = async () => {
-    dispatch(reset());
-  }
-
   return (
     <div className="container">
-
       <div>
         {winner === null ? (
           <div>
@@ -56,35 +51,35 @@ function TicTacToe() {
       </div>
 
       <table>
-        {states?.table.map((row, index) => {
-          return (
-            <tr>
+        <tbody>
+          {states?.table.map((row, index) => {
+            return (
+              <tr key={index}>
+                {row[0] === "-" ? (
+                  <td className="paper-btn" onClick={() => { handleTurn(index, 0) }}>{row[0]}</td>
+                ) : (
+                  <td className="paper-btn">{row[0]}</td>
+                )}
 
-              {row[0] === "-" ? (
-                <td className="paper-btn" onClick={() => { handleTurn(index, 0) }}>{row[0]}</td>
-              ) : (
-                <td className="paper-btn">{row[0]}</td>
-              )}
+                {row[1] === "-" ? (
+                  <td className="paper-btn" onClick={() => { handleTurn(index, 1) }}>{row[1]}</td>
+                ) : (
+                  <td className="paper-btn">{row[1]}</td>
+                )}
 
-              {row[1] === "-" ? (
-                <td className="paper-btn" onClick={() => { handleTurn(index, 1) }}>{row[1]}</td>
-              ) : (
-                <td className="paper-btn">{row[1]}</td>
-              )}
-
-              {row[2] === "-" ? (
-                <td className="paper-btn" onClick={() => { handleTurn(index, 2) }}>{row[2]}</td>
-              ) : (
-                <td className="paper-btn">{row[2]}</td>
-              )}
-            </tr>
-          )
-        })}
+                {row[2] === "-" ? (
+                  <td className="paper-btn" onClick={() => { handleTurn(index, 2) }}>{row[2]}</td>
+                ) : (
+                  <td className="paper-btn">{row[2]}</td>
+                )}
+              </tr>
+            )
+          })}
+        </tbody>
       </table>
-      
       <br />
 
-      <input type="button" className="paper-btn btn-primary-outline" value="Reset" onClick={() => resetGame()} />
+      <input type="button" className="paper-btn btn-primary-outline" value="Reset" onClick={() => dispatch(reset())} />
 
     </div>
   );
