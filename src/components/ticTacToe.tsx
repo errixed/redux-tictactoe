@@ -1,37 +1,36 @@
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { State, reset, selectWinner, turn, turnSelector } from "./ticTacToeSlice";
+import { State, reset, selectWinner, setGameStatus, turn, turnSelector } from "./ticTacToeSlice";
 
 function TicTacToe() {
 
   const [states, setStates] = useState<State>();
   const selectedTurn = useAppSelector(turnSelector);
   const dispatch = useAppDispatch();
-  const [gameStatus, setGameStatus] = useState<string>("choose a box to begin");
+  const [status, setStatus] = useState<string>("game is on");
 
   useEffect(() => {
     setStates(selectedTurn);
   }, [selectedTurn]);
 
-  const handleTurn = async(i: number, j: number) => {
+  function handleTurn(i: number, j: number) {
     const constTurn = {
       i: i,
       j: j
     };
-    if (winner === "X" || winner === "O") {
-
-    } else {
-      setGameStatus("game is on")
-      dispatch(turn(constTurn));
+    const constGameStatus = {
+      message: status
     }
-    // setGameStatus("game is on")
-    // dispatch(turn(constTurn));
+
+    if (winner === null) {
+      dispatch(turn(constTurn));
+      dispatch(setGameStatus(constGameStatus))
+    }
   }
 
   const winner = useAppSelector(selectWinner);
 
-  const resetGame = async() => {
-    setGameStatus("choose a box to begin")
+  const resetGame = async () => {
     dispatch(reset());
   }
 
@@ -39,9 +38,7 @@ function TicTacToe() {
     <div className="container">
 
       <div>
-        {winner === "X" || winner === "O" ? (
-          <h3>winner is <span className="text-success">{winner}</span></h3>
-        ) : (
+        {winner === null ? (
           <div>
 
             {states?.turn === "X" ? (
@@ -50,9 +47,11 @@ function TicTacToe() {
               <h3>current turn: <span className="text-danger">{states?.turn}</span></h3>
             )}
 
-            <h3>{gameStatus}</h3>
+            <h3>{states?.gameStatus}</h3>
 
           </div>
+        ) : (
+          <h3>winner is <span className="text-success">{winner}</span></h3>
         )}
       </div>
 
@@ -82,9 +81,10 @@ function TicTacToe() {
           )
         })}
       </table>
+      
       <br />
 
-      <input type="button" className="paper-btn btn-primary-outline" value="Reset" onClick={() => resetGame()}/>
+      <input type="button" className="paper-btn btn-primary-outline" value="Reset" onClick={() => resetGame()} />
 
     </div>
   );

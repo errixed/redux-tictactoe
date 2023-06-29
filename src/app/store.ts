@@ -13,7 +13,7 @@ const persistedReducer = persistReducer(persistConfig, tictactoeReducer)
 
 export const store = configureStore({
   reducer: {
-    persistedReducer
+    persistedReducer,
   },
   devTools: process.env.NODE_ENV !== 'production',
   middleware: [thunk]

@@ -2,12 +2,13 @@ import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../app/store";
 
 type Cell = 'X' | 'O' | '-'
-export type Table = Array<Array<Cell>>
-export type Turn = Exclude<Cell, '-'>
+type Table = Array<Array<Cell>>
+type Turn = Exclude<Cell, '-'>
 
 export interface State {
   table: Table
   turn: Turn
+  gameStatus: string
 }
 
 const initialState: State = {
@@ -17,6 +18,7 @@ const initialState: State = {
     ['-', '-', '-']
   ],
   turn: "X",
+  gameStatus: "choose a box to start"
 }
 
 interface TurnAction {
@@ -24,13 +26,20 @@ interface TurnAction {
   j: number,
 }
 
+interface GameStatusAction {
+  message: string
+}
+
 export const tictactoeSlice = createSlice({
   name: "tactactoe",
   initialState,
   reducers: {
     turn: (state, action: PayloadAction<TurnAction>) => {
-        state.table[action.payload.i][action.payload.j] = state.turn
-        state.turn = state.turn == 'O' ? 'X' : 'O'
+      state.table[action.payload.i][action.payload.j] = state.turn
+      state.turn = state.turn == 'O' ? 'X' : 'O'
+    },
+    setGameStatus: (state, action: PayloadAction<GameStatusAction>) => {
+      state.gameStatus = action.payload.message
     },
     reset: () => initialState
   },
@@ -69,6 +78,6 @@ export const selectWinner = createSelector(
   }
 );
 
-export const { turn, reset } = tictactoeSlice.actions;
+export const { turn, reset, setGameStatus } = tictactoeSlice.actions;
 export const turnSelector = (state: RootState) => state.persistedReducer;
 export default tictactoeSlice.reducer;
