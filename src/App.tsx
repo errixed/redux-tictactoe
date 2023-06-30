@@ -2,9 +2,9 @@ import React from 'react';
 import './App.css';
 import TicTacToe from './components/ticTacToe';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
+    <div className="paper App">
       <TicTacToe />
     </div>
   );

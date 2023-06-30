@@ -6,12 +6,14 @@ type Table = Array<Array<Cell>>
 type Turn = Exclude<Cell, '-'>
 
 export interface State {
+  moveNumber: number[]
   table: Table
   turn: Turn
   gameStatus: string
 }
 
 const initialState: State = {
+  moveNumber: [],
   table: [
     ['-', '-', '-'],
     ['-', '-', '-'],
@@ -30,22 +32,29 @@ interface GameStatusAction {
   message: string
 }
 
+interface moveNumberAction {
+  number: number
+}
+
 export const tictactoeSlice = createSlice({
   name: "tactactoe",
   initialState,
   reducers: {
     turn: (state, action: PayloadAction<TurnAction>) => {
       state.table[action.payload.i][action.payload.j] = state.turn
-      state.turn = state.turn == 'O' ? 'X' : 'O'
+      state.turn = state.turn === 'O' ? 'X' : 'O'
     },
-    setGameStatus: (state, action: PayloadAction<GameStatusAction>) => {
+    moveNumber: (state, action: PayloadAction<moveNumberAction>) => {
+      state.moveNumber.push(action.payload.number)
+    },
+    gameStatus: (state, action: PayloadAction<GameStatusAction>) => {
       state.gameStatus = action.payload.message
     },
-    reset: () => initialState
+    reset: () => initialState,
   },
 });
 
-function calculateWinner(squares: Cell[]) {
+const calculateWinner = (squares: Cell[]) => {
   const lines = [
   // a, b, c 
     [0, 1, 2],
@@ -78,6 +87,6 @@ export const selectWinner = createSelector(
   }
 );
 
-export const { turn, reset, setGameStatus } = tictactoeSlice.actions;
+export const { turn, reset, moveNumber, gameStatus } = tictactoeSlice.actions;
 export const turnSelector = (state: RootState) => state.persistedReducer;
 export default tictactoeSlice.reducer;
