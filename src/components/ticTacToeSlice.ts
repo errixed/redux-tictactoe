@@ -1,19 +1,17 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../app/store";
 
-type Cell = 'X' | 'O' | '-'
-type Table = Array<Array<Cell>>
-type Turn = Exclude<Cell, '-'>
+export type Cell = 'X' | 'O' | '-'
+export type Table = Array<Array<Cell>>
+export type Turn = Exclude<Cell, '-'>
 
 export interface State {
-  moveNumber: number[]
   table: Table
   turn: Turn
   gameStatus: string
 }
 
 const initialState: State = {
-  moveNumber: [],
   table: [
     ['-', '-', '-'],
     ['-', '-', '-'],
@@ -32,23 +30,22 @@ interface GameStatusAction {
   message: string
 }
 
-interface moveNumberAction {
-  number: number
-}
-
 export const tictactoeSlice = createSlice({
   name: "tactactoe",
   initialState,
   reducers: {
     turn: (state, action: PayloadAction<TurnAction>) => {
-      state.table[action.payload.i][action.payload.j] = state.turn
-      state.turn = state.turn === 'O' ? 'X' : 'O'
-    },
-    moveNumber: (state, action: PayloadAction<moveNumberAction>) => {
-      state.moveNumber.push(action.payload.number)
+      if (state.table[action.payload.i][action.payload.j] === '-') {
+        state.table[action.payload.i][action.payload.j] = state.turn
+        state.turn = state.turn === 'O' ? 'X' : 'O'
+      }
     },
     gameStatus: (state, action: PayloadAction<GameStatusAction>) => {
       state.gameStatus = action.payload.message
+    },
+    undo: (state, action: PayloadAction<Table>) => {
+      state.table = action.payload
+      state.turn = state.turn === 'O' ? 'X' : 'O'
     },
     reset: () => initialState,
   },
@@ -87,6 +84,6 @@ export const selectWinner = createSelector(
   }
 );
 
-export const { turn, reset, moveNumber, gameStatus } = tictactoeSlice.actions;
-export const turnSelector = (state: RootState) => state.persistedReducer;
+export const { turn, reset, gameStatus, undo } = tictactoeSlice.actions;
+export const stateSelector = (state: RootState) => state.persistedReducer;
 export default tictactoeSlice.reducer;
