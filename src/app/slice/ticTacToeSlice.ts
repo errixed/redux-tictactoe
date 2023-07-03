@@ -1,9 +1,9 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "../app/store";
+import { RootState } from "../store";
 
-export type Cell = 'X' | 'O' | '-'
+type Cell = 'X' | 'O' | '-'
 export type Table = Array<Array<Cell>>
-export type Turn = Exclude<Cell, '-'>
+type Turn = Exclude<Cell, '-'>
 
 export interface State {
   table: Table
@@ -74,7 +74,7 @@ const calculateWinner = (squares: Cell[]) => {
   return null;
 }
 
-export const selectSquares = (state: RootState) => state.persistedReducer.table
+export const selectSquares = (state: RootState) => state.persistedReducer.ticTacToe.table
 
 export const selectWinner = createSelector(
   selectSquares,
@@ -85,5 +85,5 @@ export const selectWinner = createSelector(
 );
 
 export const { turn, reset, gameStatus, undo } = tictactoeSlice.actions;
-export const stateSelector = (state: RootState) => state.persistedReducer;
+export const stateSelector = (state: RootState) => state.persistedReducer.ticTacToe;
 export default tictactoeSlice.reducer;

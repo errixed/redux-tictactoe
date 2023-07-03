@@ -1,13 +1,20 @@
 import React from 'react';
-import './App.css';
-import TicTacToe from './components/ticTacToe';
+import './style/App.css';
+import { Game } from './pages/game';
+import { Route, Switch } from 'react-router-dom';
+import { TicTacToePage } from './pages/ticTacToePage';
 
-const App = () => {
+export const App = () => {
   return (
-    <div className="paper App">
-      <TicTacToe />
+    <div className='paper App'>
+      <Switch>
+        <Route path="/"  exact>
+          <Game />
+        </Route>
+        <Route path="/ticTacToe"  exact>
+          <TicTacToePage />
+        </Route>
+      </Switch>
     </div>
   );
 }
-
-export default App;

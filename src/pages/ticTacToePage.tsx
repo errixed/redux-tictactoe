@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { State, reset, selectWinner, gameStatus, turn, stateSelector, Table, Cell, undo } from "./ticTacToeSlice";
+import { State, reset, selectWinner, gameStatus, turn, stateSelector, Table, undo } from "../app/slice/ticTacToeSlice";
+import { ReturnUser } from "../components/returnUser";
+import { Login, userSelector } from "../app/slice/loginSlice";
 
-const TicTacToe = () => {
+export const TicTacToePage = () => {
+  const [users, setUsers] = useState<Array<Login>>([]);
+
 
   const [states, setStates] = useState<State>();
   const [lastTable, setlastTable] = useState<Table>(
@@ -14,6 +18,12 @@ const TicTacToe = () => {
   const [executedUndo, setExecutedUndo] = useState<boolean>(true);
   const selectedState = useAppSelector(stateSelector);
   const dispatch = useAppDispatch();
+  
+  const selectedUsers = useAppSelector(userSelector);
+
+  useEffect(() => {
+    setUsers(selectedUsers);
+  }, [selectedUsers]);
 
   useEffect(() => {
     setStates(selectedState);
@@ -30,7 +40,7 @@ const TicTacToe = () => {
         }))
       }
     }
-
+    console.log("executed")
   }, [selectedState]);
 
   const handleTurn = (i: number, j: number) => {
@@ -65,13 +75,16 @@ const TicTacToe = () => {
   return (
     <div className="container">
       <div>
+        {<ReturnUser users={users} />}
+      </div>
+      <div>
 
         {winner === null && states?.gameStatus !== "draw" ? (
           <div>
-            
+
             <h3>current turn: <span className={states?.turn === "X" ? "text-secondary" : "text-danger"}>{states?.turn}</span></h3>
             <h3>{states?.gameStatus}</h3>
-            
+
           </div>
         ) : states?.gameStatus === "draw" ? (
           <h3 className="text-warning">{states?.gameStatus}</h3>
@@ -88,7 +101,7 @@ const TicTacToe = () => {
               <tr key={index}>
                 {row.map((cell, index2) => {
                   return (
-                    <td key={index+','+index2} className={cell === "X" ? "paper-btn btn-secondary-outline" : cell === "O" ? "paper-btn btn-danger-outline" : "paper-btn"} onClick={() => { handleTurn(index, index2) }}>{cell}</td>
+                    <td key={index + ',' + index2} className={cell === "X" ? "paper-btn btn-secondary-outline" : cell === "O" ? "paper-btn btn-danger-outline" : "paper-btn"} onClick={() => { handleTurn(index, index2) }}>{cell}</td>
                   )
                 })}
               </tr>
@@ -107,5 +120,3 @@ const TicTacToe = () => {
     </div>
   );
 }
-
-export default TicTacToe;
