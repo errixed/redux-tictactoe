@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { State, reset, selectWinner, gameStatus, turn, stateSelector, Table, undo } from "../app/slice/ticTacToeSlice";
-import { ReturnUser } from "../components/returnUser";
 import { Login, userSelector } from "../app/slice/loginSlice";
 
 export const TicTacToePage = () => {
@@ -19,12 +18,6 @@ export const TicTacToePage = () => {
   const selectedState = useAppSelector(stateSelector);
   const dispatch = useAppDispatch();
   
-  const selectedUsers = useAppSelector(userSelector);
-
-  useEffect(() => {
-    setUsers(selectedUsers);
-  }, [selectedUsers]);
-
   useEffect(() => {
     setStates(selectedState);
 
@@ -75,7 +68,7 @@ export const TicTacToePage = () => {
   return (
     <div className="container">
       <div>
-        {<ReturnUser users={users} />}
+        {/* {<ReturnUser users={users} />} */}
       </div>
       <div>
 

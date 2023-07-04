@@ -3,7 +3,7 @@ import { RootState } from "../store";
 
 type Cell = 'X' | 'O' | '-'
 export type Table = Array<Array<Cell>>
-type Turn = Exclude<Cell, '-'>
+export type Turn = Exclude<Cell, '-'>
 
 export interface State {
   table: Table
