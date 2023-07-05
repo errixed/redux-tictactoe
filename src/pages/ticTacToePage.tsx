@@ -11,9 +11,10 @@ export const TicTacToePage = () => {
       ['-', '-', '-'],
       ['-', '-', '-']
     ]);
-  const [executedUndo, setExecutedUndo] = useState<boolean>(true);
-  const selectedState = useAppSelector(stateSelector);
-  const dispatch = useAppDispatch();
+    const [executedUndo, setExecutedUndo] = useState<boolean>(true);
+    const selectedState = useAppSelector(stateSelector);
+    const dispatch = useAppDispatch();
+    const winner = useAppSelector(selectWinner);
   
   useEffect(() => {
     setStates(selectedState);
@@ -31,7 +32,7 @@ export const TicTacToePage = () => {
       }
     }
     console.log("executed")
-  }, [selectedState]);
+  }, [selectedState, dispatch, winner]);
 
   const handleTurn = (i: number, j: number) => {
     const newTurn = {
@@ -52,7 +53,6 @@ export const TicTacToePage = () => {
     }
   }
 
-  const winner = useAppSelector(selectWinner);
 
   const handleUndo = () => {
 
