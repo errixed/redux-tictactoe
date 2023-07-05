@@ -1,11 +1,8 @@
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { State, reset, selectWinner, gameStatus, turn, stateSelector, Table, undo } from "../app/slice/ticTacToeSlice";
-import { Login, userSelector } from "../app/slice/loginSlice";
 
 export const TicTacToePage = () => {
-  const [users, setUsers] = useState<Array<Login>>([]);
-
 
   const [states, setStates] = useState<State>();
   const [lastTable, setlastTable] = useState<Table>(

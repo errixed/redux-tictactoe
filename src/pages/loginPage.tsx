@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { Login, addUser, isReady } from "../app/slice/loginSlice";
-import { reset } from "../app/slice/loginSlice";
+import { useAppDispatch } from "../app/hooks";
+import { addUser } from "../app/slice/loginSlice";
 import { Turn } from "../app/slice/ticTacToeSlice";
 
 export const LoginPage: React.FC<{role: Turn}> = (props) => {
