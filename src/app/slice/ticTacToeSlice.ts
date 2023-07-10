@@ -1,7 +1,7 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "../app/store";
+import { RootState } from "../store";
 
-export type Cell = 'X' | 'O' | '-'
+type Cell = 'X' | 'O' | '-'
 export type Table = Array<Array<Cell>>
 export type Turn = Exclude<Cell, '-'>
 
@@ -9,6 +9,8 @@ export interface State {
   table: Table
   turn: Turn
   gameStatus: string
+  nameX: string,
+  nameO: string,
 }
 
 const initialState: State = {
@@ -18,7 +20,9 @@ const initialState: State = {
     ['-', '-', '-']
   ],
   turn: "X",
-  gameStatus: "choose a box to start"
+  gameStatus: "choose a box to start",
+  nameO: '',
+  nameX: '',
 }
 
 interface TurnAction {
@@ -47,7 +51,19 @@ export const tictactoeSlice = createSlice({
       state.table = action.payload
       state.turn = state.turn === 'O' ? 'X' : 'O'
     },
-    reset: () => initialState,
+    reset: (state) => {
+      state.table = initialState.table
+      state.turn = initialState.turn
+      state.gameStatus = initialState.gameStatus
+    },
+    setUser: (state, action: PayloadAction<{name: string, role: Turn}>) => {
+      if (action.payload.role === 'O') {
+        state.nameO = action.payload.name
+      }
+      if (action.payload.role === 'X') {
+        state.nameX = action.payload.name
+      }
+    }
   },
 });
 
@@ -74,7 +90,7 @@ const calculateWinner = (squares: Cell[]) => {
   return null;
 }
 
-export const selectSquares = (state: RootState) => state.persistedReducer.table
+export const selectSquares = (state: RootState) => state.persistedReducer.ticTacToe.table
 
 export const selectWinner = createSelector(
   selectSquares,
@@ -84,6 +100,6 @@ export const selectWinner = createSelector(
   }
 );
 
-export const { turn, reset, gameStatus, undo } = tictactoeSlice.actions;
-export const stateSelector = (state: RootState) => state.persistedReducer;
+export const { turn, reset, gameStatus, undo, setUser } = tictactoeSlice.actions;
+export const stateSelector = (state: RootState) => state.persistedReducer.ticTacToe;
 export default tictactoeSlice.reducer;
