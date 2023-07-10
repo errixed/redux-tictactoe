@@ -45,5 +45,21 @@
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@types/react-redux": "^7.1.25"
-  }
+  },
+  "description": "",
+  "main": "index.js",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/@errixed"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/errixed/tic-tac-toe.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/errixed/tic-tac-toe/issues"
+  },
+  "homepage": "https://github.com/errixed/tic-tac-toe#readme"
 }
