@@ -4,8 +4,8 @@ import { isReady, reset } from "../app/slice/loginSlice";
 import { Link } from "react-router-dom";
 
 export const Game = () => {
-    const ready = useAppSelector(isReady);
 
+    const ready = useAppSelector(isReady);
     const dispatch = useAppDispatch();
 
     return (

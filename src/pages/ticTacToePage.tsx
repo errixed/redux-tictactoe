@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { State, reset, selectWinner, gameStatus, turn, stateSelector, Table, undo } from "../app/slice/ticTacToeSlice";
 
 export const TicTacToePage = () => {
+  const [users, setUsers] = useState<Array<Login>>([]);
 
 
   const [states, setStates] = useState<State>();
