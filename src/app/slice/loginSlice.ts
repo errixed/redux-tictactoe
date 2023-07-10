@@ -1,6 +1,7 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 import { Turn } from "./ticTacToeSlice";
+
 export interface Login {
   name: string;
   role: Turn
@@ -35,7 +36,7 @@ export const loginSlice = createSlice({
         }
       }
     },
-    reset: () => initialState
+    logout: () => initialState
   },
 });
 
@@ -48,6 +49,6 @@ export const isReady = createSelector(
 
 );
 
-export const { addUser, reset } = loginSlice.actions;
+export const { addUser, logout } = loginSlice.actions;
 export const userSelector = (state: RootState) => state.persistedReducer.login;
 export default loginSlice.reducer;

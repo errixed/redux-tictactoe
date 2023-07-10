@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useAppDispatch } from "../app/hooks";
 import { addUser } from "../app/slice/loginSlice";
-import { Turn } from "../app/slice/ticTacToeSlice";
+import { Turn, setUser } from "../app/slice/ticTacToeSlice";
 
 export const LoginPage: React.FC<{role: Turn}> = (props) => {
   const [newUserName, setNewUserName] = useState<string>("");
@@ -16,6 +16,7 @@ export const LoginPage: React.FC<{role: Turn}> = (props) => {
     };
     setState('ready')
     dispatch(addUser(newUser));
+    dispatch(setUser(newUser))
   }
 
   return (

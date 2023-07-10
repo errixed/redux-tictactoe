@@ -31,6 +31,7 @@ export const TicTacToePage = () => {
         }))
       }
     }
+
   }, [selectedState, dispatch, winner]);
 
   const handleTurn = (i: number, j: number) => {
@@ -53,7 +54,6 @@ export const TicTacToePage = () => {
   }
 
   const handleUndo = () => {
-
     if (executedUndo === false) {
       dispatch(undo(lastTable))
       setExecutedUndo(true)
@@ -63,14 +63,13 @@ export const TicTacToePage = () => {
   return (
     <div className="container">
       <div>
-        {/* {<ReturnUser users={users} />} */}
-      </div>
-      <div>
 
         {winner === null && states?.gameStatus !== "draw" ? (
           <div>
-
-            <h3>current turn: <span className={states?.turn === "X" ? "text-secondary" : "text-danger"}>{states?.turn}</span></h3>
+            
+            <h3>current turn: <span className={states?.turn === "X" ? "text-secondary" : "text-danger"}>
+              {states?.turn === "X" ?  states?.nameX : states?.nameO} - 
+              {states?.turn}</span></h3>
             <h3>{states?.gameStatus}</h3>
 
           </div>
