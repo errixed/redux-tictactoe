@@ -1,4 +1,4 @@
-import { createReducer, createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 import { Turn } from "./ticTacToeSlice";
 export interface Login {
@@ -43,10 +43,9 @@ export const selectReady = (state: RootState) => state.persistedReducer.login
 
 export const isReady = createSelector(
   selectReady,
-  (state) => {
-    console.log('state', state.playerO, state.playerX)
-    return state.playerX !== undefined && state.playerO !== undefined //return boolean
-  }
+  (state) => state.playerX !== undefined && state.playerO !== undefined //return boolean
+    // console.log('state', state.playerO, state.playerX)
+
 );
 
 export const { addUser, reset } = loginSlice.actions;

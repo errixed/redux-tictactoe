@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { State, reset, selectWinner, gameStatus, turn, stateSelector, Table, undo } from "../app/slice/ticTacToeSlice";
-import { Login, userSelector } from "../app/slice/loginSlice";
 
 export const TicTacToePage = () => {
-  const [users, setUsers] = useState<Array<Login>>([]);
 
 
   const [states, setStates] = useState<State>();
@@ -16,6 +14,7 @@ export const TicTacToePage = () => {
     ]);
   const [executedUndo, setExecutedUndo] = useState<boolean>(true);
   const selectedState = useAppSelector(stateSelector);
+  const winner = useAppSelector(selectWinner);
   const dispatch = useAppDispatch();
   
   useEffect(() => {
@@ -33,8 +32,7 @@ export const TicTacToePage = () => {
         }))
       }
     }
-    console.log("executed")
-  }, [selectedState]);
+  }, [selectedState, dispatch, winner]);
 
   const handleTurn = (i: number, j: number) => {
     const newTurn = {
@@ -54,8 +52,6 @@ export const TicTacToePage = () => {
       setExecutedUndo(false)
     }
   }
-
-  const winner = useAppSelector(selectWinner);
 
   const handleUndo = () => {
 
