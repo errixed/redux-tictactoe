@@ -6,7 +6,7 @@ COPY . .
 # RUN npm test - if you want to test before to build
 RUN npm run build
 
-FROM nginx:alpine AS prod
+FROM nginx:alpine AS nginx-prod
 WORKDIR /usr/share/nginx/html
 COPY --from=prod /app/build .
 EXPOSE 80
