@@ -6,9 +6,9 @@ A tic tac toe game made by react/typescript and redux toolkit
 <br/>
 <br/>
 ![GitHub followers](https://img.shields.io/github/followers/errixed)
-![GitHub forks](https://img.shields.io/github/forks/errixed/redux-tictactoe)
-![GitHub watchers](https://img.shields.io/github/watchers/errixed/redux-tictactoe)
-![GitHub Repo stars](https://img.shields.io/github/stars/errixed/redux-tictactoe)
+![GitHub forks](https://img.shields.io/github/forks/errixed/tic-tac-toe)
+![GitHub watchers](https://img.shields.io/github/watchers/errixed/tic-tac-toe)
+![GitHub Repo stars](https://img.shields.io/github/stars/errixed/tic-tac-toe)
 
 </div>
 
