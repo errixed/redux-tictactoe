@@ -18,5 +18,8 @@ A tic tac toe game made by react/typescript and redux toolkit
 ```
 npm install
 ```
+```
+npm start
+```
   
   
